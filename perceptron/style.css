@@ -1,0 +1,174 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f8fa;
+  color: #202124;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main {
+  width: min(900px, 92%);
+  margin: 50px auto;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: 2rem;
+}
+
+.subtitle {
+  margin-top: 0;
+  color: #666;
+  font-size: 1.05rem;
+}
+
+.demo {
+  margin-top: 35px;
+}
+
+.demo h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #777;
+  text-align: center;
+}
+
+#plot {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  margin: 10px auto 20px;
+  background: #fffdf9;
+  border: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+button {
+  padding: 10px 18px;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  background: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #eeeeee;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+#explanation {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 16px 20px;
+  background: white;
+  border-left: 4px solid #777;
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 12px 0 20px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.filled-dot,
+.outlined-dot,
+.mistake-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.filled-dot {
+  background: #2563eb;
+  border: 2px solid #2563eb;
+}
+
+.outlined-dot {
+  background: white;
+  border: 2px solid #2563eb;
+}
+
+.mistake-dot {
+  background: white;
+  border: 3px solid #dc2626;
+}
+
+.boundary-key {
+  width: 22px;
+  height: 0;
+  border-top: 3px solid #f97316;
+  display: inline-block;
+}
+
+.truth-key {
+  width: 24px;
+  height: 0;
+  border-top: 3px dashed #087b67;
+  display: inline-block;
+}
+
+/* ==========================================================
+   TWO GRAPH LAYOUT
+   ========================================================== */
+
+.graphs {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.graph-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.graph-panel h2 {
+  text-align: center;
+}
+
+.graph-panel svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Stack graphs on smaller screens */
+@media (max-width: 1000px) {
+  .graphs {
+    flex-direction: column;
+  }
+
+  .graph-panel {
+    width: 100%;
+  }
+}
+

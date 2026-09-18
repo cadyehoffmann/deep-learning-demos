@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rosenblatt's Perceptron Algorithm</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <body>
+  <main>
+    <h1>Rosenblatt's Perceptron Algorithm</h1>
+    <p class="subtitle">
+      Watch the perceptron learn a linear decision boundary one mistake at a time.
+    </p>
+
+    <section class="demo">
+      <div class="graphs">
+
+        <div class="graph-panel">
+        <h2>Data Space</h2>
+        <svg id="plot" viewBox="0 0 600 500"></svg>
+    </div>
+
+    <div class="graph-panel">
+        <h2>Weight Space</h2>
+        <svg id="weight-plot" viewBox="0 0 600 500"></svg>
+    </div>
+
+    </div>
+      <div class="legend">
+        <span>
+            <span class="filled-dot"></span>
+            y = +1
+        </span>
+
+        <span>
+            <span class="outlined-dot"></span>
+            y = -1
+        </span>
+
+        <span>
+            <span class="boundary-key"></span>
+            Current decision boundary
+        </span>
+
+        <span>
+            <span class="truth-key"></span>
+            True separator
+    </span>
+
+        <span>
+            <span class="mistake-dot"></span>
+            Misclassified
+        </span>
+      </div>
+      <div class="controls">
+        <button id="next-step">Find Mistakes</button>
+        <button id="restart">Restart</button>
+      </div>
+
+      <div id="explanation">
+        <p>Start by finding a point that the current perceptron misclassifies.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="perceptron.js"></script>
+</body>
+</html>
