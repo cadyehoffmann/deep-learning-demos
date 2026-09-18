@@ -2,6 +2,8 @@
 
 An interactive visualization of Rosenblatt's perceptron learning algorithm.
 
+[▶ Launch Interactive Demo](https://cadyehoffmann.github.io/deep-learning-demos/perceptron/)
+
 This demo shows how a perceptron learns a linear decision boundary by repeatedly identifying misclassified training examples and updating its weight vector.
 
 ## The Perceptron
