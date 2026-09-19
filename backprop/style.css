@@ -1,0 +1,1131 @@
+:root {
+  --bg: #f7f7f5;
+  --panel: #ffffff;
+  --text: #171717;
+  --muted: #686868;
+  --border: #deded8;
+
+  --forward: #1677ff;
+  --backward: #e5484d;
+  --active: #f5a623;
+
+  --input: #edf5ff;
+  --hidden: #f7f2ff;
+  --output: #ecfbf3;
+  --loss: #fff1f1;
+
+  --radius: 18px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.055);
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.5;
+}
+
+
+button,
+input {
+  font: inherit;
+}
+
+
+button {
+  border: 0;
+  border-radius: 10px;
+  background: #171717;
+  color: white;
+  padding: 11px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    background 0.15s ease;
+}
+
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+
+button.secondary {
+  background: #ecece8;
+  color: #222;
+}
+
+
+input {
+  width: 82px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 8px;
+  background: white;
+}
+
+
+.hero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 58px 24px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  margin: 8px 0 18px;
+}
+
+
+.subtitle {
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+
+.github-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+
+.panel,
+.status-card,
+.network-panel,
+.takeaway {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+
+.panel {
+  padding: 24px;
+}
+
+
+.controls-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+
+.control-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+
+.control-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+
+.control-label {
+  width: 100%;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+}
+
+
+.buttons {
+  width: 100%;
+  justify-content: center;
+  margin-left: 0;
+}
+
+
+.status-card {
+  margin-top: 18px;
+  padding: 20px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.status-card h2 {
+  margin: 8px 0 2px;
+  font-size: 1.25rem;
+}
+
+
+.status-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+
+.phase-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+
+.phase-badge.neutral {
+  background: #eee;
+}
+
+
+.phase-badge.forward {
+  background: #e6f1ff;
+  color: #075fc7;
+}
+
+
+.phase-badge.backward {
+  background: #ffe9e9;
+  color: #c62f35;
+}
+
+
+.phase-badge.update {
+  background: #fff3d8;
+  color: #8c5a00;
+}
+
+
+.step-counter {
+  text-align: right;
+}
+
+
+.step-counter span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+
+.step-counter strong {
+  font-size: 1.25rem;
+}
+
+
+.network-panel {
+  margin-top: 18px;
+  padding: 24px;
+}
+
+
+.network-heading,
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+
+.network-heading h2,
+.section-heading h2 {
+  margin: 0;
+}
+
+
+.network-heading p,
+.section-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+
+.forward-dot {
+  background: var(--forward);
+}
+
+
+.backward-dot {
+  background: var(--backward);
+}
+
+
+.active-dot {
+  background: var(--active);
+}
+
+
+#networkWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+#networkSvg {
+  display: block;
+  width: 100%;
+  min-width: 850px;
+  margin-top: 10px;
+}
+
+
+.edge {
+  stroke: #bbb;
+  stroke-width: 4;
+  transition:
+    stroke 0.25s ease,
+    stroke-width 0.25s ease,
+    opacity 0.25s ease;
+}
+
+
+.edge.forward-active {
+  stroke: var(--forward);
+  stroke-width: 7;
+}
+
+
+.edge.backward-active {
+  stroke: var(--backward);
+  stroke-width: 7;
+}
+
+
+.edge.updated {
+  stroke: var(--active);
+  stroke-width: 7;
+}
+
+
+.edge-labels text {
+  font-size: 16px;
+  font-weight: 700;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: white;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+
+.node circle,
+.node rect {
+  fill: white;
+  stroke: #aaa;
+  stroke-width: 3;
+  transition:
+    stroke 0.2s ease,
+    stroke-width 0.2s ease,
+    fill 0.2s ease;
+}
+
+
+.input-node circle {
+  fill: var(--input);
+}
+
+
+.output-node circle {
+  fill: var(--output);
+}
+
+
+.loss-node rect {
+  fill: var(--loss);
+}
+
+
+.node.active-forward circle,
+.node.active-forward rect {
+  stroke: var(--forward);
+  stroke-width: 7;
+}
+
+
+.node.active-backward circle,
+.node.active-backward rect {
+  stroke: var(--backward);
+  stroke-width: 7;
+}
+
+
+.node.active-update circle,
+.node.active-update rect {
+  stroke: var(--active);
+  stroke-width: 7;
+}
+
+
+.node text {
+  text-anchor: middle;
+}
+
+
+.node-name {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+.node-value {
+  font-size: 17px;
+  fill: #555;
+}
+
+
+.layer-label {
+  text-anchor: middle;
+  fill: #999;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+
+.explanation-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+}
+
+
+.calculation-panel h2,
+.gradient-panel h2 {
+  margin: 7px 0 16px;
+}
+
+
+.formula {
+  background: #f3f3f0;
+  border-radius: 12px;
+  padding: 18px;
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 1rem;
+  overflow-x: auto;
+}
+
+
+.formula.compact {
+  margin-top: 18px;
+}
+
+
+.calculation-details {
+  margin-top: 14px;
+  color: var(--muted);
+}
+
+
+.gradient-equation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  background: #fafafa;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+
+.gradient-equation div {
+  text-align: center;
+  min-width: 90px;
+}
+
+
+.gradient-equation span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+
+.gradient-equation strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.05rem;
+}
+
+
+.gradient-equation .operator {
+  color: #999;
+  font-size: 1.2rem;
+}
+
+
+#gradientExplanation {
+  color: var(--muted);
+}
+
+
+.weight-table-wrapper {
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+th,
+td {
+  text-align: left;
+  padding: 13px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+
+th {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+
+.weight-row {
+  cursor: pointer;
+}
+
+
+.weight-row:hover {
+  background: #fafafa;
+}
+
+
+.weight-row.selected {
+  background: #fff8e9;
+}
+
+
+.penny-card {
+  margin-top: 18px;
+}
+
+
+.penny-card h2 {
+  margin-bottom: 6px;
+}
+
+
+.penny-card p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+
+.training-panel {
+  margin-top: 18px;
+}
+
+
+.training-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+
+.training-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+
+.training-stats div {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+
+.training-stats span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+
+.training-stats strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 1.2rem;
+}
+
+
+.takeaway {
+  margin-top: 18px;
+  padding: 34px;
+}
+
+
+.takeaway h2 {
+  max-width: 820px;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+
+.takeaway > p:last-child {
+  max-width: 760px;
+  color: var(--muted);
+}
+
+
+footer {
+  text-align: center;
+  color: #888;
+  padding: 20px 20px 50px;
+  font-size: 0.85rem;
+}
+
+
+@media (max-width: 800px) {
+
+  .hero {
+    flex-direction: column;
+  }
+
+  .buttons {
+    margin-left: 0;
+  }
+
+  .explanation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .training-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .network-heading,
+  .section-heading {
+    flex-direction: column;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .training-stats {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.network-computation-box {
+  fill: #f7f7f5;
+  stroke: #d8d8d2;
+  stroke-width: 2;
+}
+
+.network-computation-line {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+}
+
+.network-computation-line.main,
+.network-computation-line.secondary {
+  font-size: 15px;
+  font-weight: 700;
+  fill: #222;
+}
+
+.math-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 1.05;
+  margin: 0 0.15em;
+}
+
+.math-frac .num {
+  padding: 0 0.2em 0.12em;
+  border-bottom: 1.5px solid currentColor;
+}
+
+.math-frac .den {
+  padding: 0.12em 0.2em 0;
+}
+
+/* Pre-activation values shown beside their corresponding neurons */
+
+.z-value {
+  text-anchor: middle;
+  font-size: 14px;
+  font-weight: 600;
+  fill: #999;
+}
+
+/* ================================================================
+   AUTOMATIC TRAINING
+   ================================================================ */
+
+.training-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.training-heading h2 {
+  margin: 7px 0 6px;
+}
+
+.training-heading p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  max-width: 600px;
+}
+
+
+/* ------------------------------------------------
+   TRAINING BUTTONS
+   ------------------------------------------------ */
+
+.training-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.training-button {
+  min-width: 125px;
+}
+
+.training-button.secondary {
+  background: #ecece8;
+  color: #222;
+}
+
+
+/* ------------------------------------------------
+   TRAINING EXPLANATION
+   ------------------------------------------------ */
+
+.training-explanation {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: #f3f3f0;
+  border-radius: 12px;
+}
+
+.training-explanation h3 {
+  margin: 6px 0 8px;
+  font-size: 1.05rem;
+}
+
+.training-explanation > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+
+.training-cycle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.training-cycle strong {
+  color: var(--muted);
+}
+
+
+/* ------------------------------------------------
+   TRAINING STATS
+   ------------------------------------------------ */
+
+.training-stats {
+  margin-top: 18px;
+}
+
+
+/* ------------------------------------------------
+   TRAINING HISTORY
+   ------------------------------------------------ */
+
+.training-history-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin: 7px 0 16px;
+}
+
+.training-history-heading h2 {
+  margin: 0;
+}
+
+#trainingProgress {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #eee;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.training-table-wrapper {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.training-history-table {
+  width: 100%;
+  min-width: 0;
+  table-layout: auto;
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.72rem;
+}
+
+.training-history-table th,
+.training-history-table td {
+  padding: 9px 6px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.training-history-table th:first-child,
+.training-history-table td:first-child {
+  text-align: center;
+}
+
+.training-history-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f3f3f0;
+}
+
+.training-history-table tbody tr:last-child {
+  background: #fff8e9;
+  font-weight: 700;
+}
+
+
+/* ------------------------------------------------
+   RESPONSIVE TRAINING LAYOUT
+   ------------------------------------------------ */
+
+@media (max-width: 900px) {
+
+  .training-heading {
+    flex-direction: column;
+  }
+
+  .training-actions {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .training-button {
+    flex: 1 1 100%;
+  }
+
+}
+
+/* ================================================================
+   BACKPROP GRADIENT SUMMARY
+   ================================================================ */
+
+.gradient-summary {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.gradient-summary-title {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.gradient-summary-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.78rem;
+}
+
+.gradient-summary-row:last-child {
+  border-bottom: 0;
+}
+
+.gradient-summary-label {
+  grid-column: 1 / -1;
+  margin-bottom: 2px;
+  font-family: inherit;
+  font-weight: 800;
+}
+
+.gradient-summary-row .operator {
+  color: var(--muted);
+}
+
+/* ================================================================
+   UPSTREAM × LOCAL EXPLANATION
+   ================================================================ */
+
+/*
+   The original upstream × local = whole gradient
+   equation stays above.
+
+   These styles are only for the extra explanatory
+   information underneath it.
+*/
+
+
+/* ------------------------------------------------
+   DEFINITIONS
+   ------------------------------------------------ */
+
+.gradient-meaning {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.gradient-meaning-item {
+  padding: 16px 18px;
+
+  background: #f7f7f4;
+  border-radius: 10px;
+}
+
+
+.gradient-meaning-title {
+  display: block;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+
+.gradient-meaning-definition {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+
+.gradient-meaning-item strong {
+  display: block;
+
+  margin-top: 9px;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 1rem;
+}
+
+
+/* ------------------------------------------------
+   FORWARD / BACKPROPAGATION PATHS
+   ------------------------------------------------ */
+
+.gradient-path {
+  margin-top: 18px;
+  padding: 16px 18px;
+
+  background: #f3f3f0;
+  border-radius: 10px;
+}
+
+
+.gradient-path > div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+
+.gradient-path > div + div {
+  margin-top: 12px;
+}
+
+
+.gradient-path span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+
+.gradient-path strong {
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+
+/* ------------------------------------------------
+   EXPLANATION SENTENCE
+   ------------------------------------------------ */
+
+#gradientExplanation {
+  margin-top: 18px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* Wider Current Calculation panel during training */
+
+.explanation-grid:has(#trainingHistoryView:not([hidden])) {
+  grid-template-columns: minmax(349px, 0.65fr) minmax(0, 2.35fr);
+}
+
+/* 25 steps: show the full table */
+.training-table-wrapper {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* 100 steps: cap the table around the height of 25 rows,
+   then scroll inside the table */
+.training-table-wrapper.scroll-training {
+  max-height: 900px;
+  overflow-y: auto;
+}

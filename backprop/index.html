@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Backpropagation Explorer</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<header class="hero">
+  <div>
+    <p class="eyebrow">DEEP LEARNING DEMOS</p>
+    <h1>Backpropagation Explorer</h1>
+
+    <p class="subtitle">
+      Follow one example through a neural network and watch the chain
+      rule turn prediction error into gradients for every weight.
+    </p>
+  </div>
+
+  <a class="github-link"
+     href="https://github.com/cadyehoffmann/deep-learning-demos"
+     target="_blank"
+     rel="noopener noreferrer">
+    GitHub ↗
+  </a>
+</header>
+
+
+<main>
+
+  <!-- ============================================================
+       CONTROL PANEL
+       ============================================================ -->
+
+  <section class="panel controls-panel">
+
+    <div class="control-group">
+      <span class="control-label">Input</span>
+
+      <label>
+        x₁
+        <input id="x1" type="number" value="1.00" step="0.1">
+      </label>
+
+      <label>
+        x₂
+        <input id="x2" type="number" value="0.50" step="0.1">
+      </label>
+
+      <label>
+        Target (y)
+        <input id="target" type="number" value="1.00"
+               min="0" max="1" step="1">
+      </label>
+    </div>
+
+
+    <div class="control-group">
+      <span class="control-label">Biases</span>
+
+      <label>
+        b₁
+        <input id="b1" type="number" value="0.10" step="0.1">
+      </label>
+
+      <label>
+        b₂
+        <input id="b2" type="number" value="-0.20" step="0.1">
+      </label>
+
+      <label>
+        b₃
+        <input id="b3" type="number" value="0.05" step="0.1">
+      </label>
+    </div>
+
+
+    <div class="control-group">
+      <span class="control-label">Training</span>
+
+      <label>
+        Learning rate η
+        <input id="learningRate"
+               type="number"
+               value="0.50"
+               min="0.001"
+               step="0.05">
+      </label>
+    </div>
+
+
+    <div class="control-group buttons">
+      <button id="resetBtn" class="secondary">Reset</button>
+      <button id="forwardBtn">Step Forward</button>
+      <button id="backwardBtn" disabled>Step Backward</button>
+      <button id="updateBtn" disabled>Update Weights</button>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       STATUS / EXPLANATION
+       ============================================================ -->
+
+  <section class="status-card">
+
+    <div>
+      <span id="phaseBadge" class="phase-badge neutral">
+        Ready
+      </span>
+
+      <h2 id="stepTitle">Start with a forward pass</h2>
+
+      <p id="stepDescription">
+        The network will compute a prediction from left to right.
+      </p>
+    </div>
+
+    <div class="step-counter">
+      <span>STEP</span>
+      <strong id="stepCounter">0 / 0</strong>
+    </div>
+
+    </section>
+
+
+  <!-- ============================================================
+       AUTOMATIC TRAINING
+       ============================================================ -->
+
+  <section id="trainingPanel" class="panel training-panel">
+
+    <div class="training-heading">
+
+      <div>
+        <p class="eyebrow">PUT IT TOGETHER</p>
+        <h2>Train the network</h2>
+
+        <p>
+          After completing one training iteration manually, use these
+          buttons to repeat the full learning cycle automatically.
+        </p>
+      </div>
+
+      <div class="training-actions">
+        <button id="train1Btn" class="training-button">
+          Train 1 Step
+        </button>
+
+        <button id="train25Btn" class="training-button secondary">
+          Train 25 Steps
+        </button>
+
+        <button id="train100Btn" class="training-button secondary">
+          Train 100 Steps
+        </button>
+      </div>
+
+    </div>
+
+
+    <div class="training-explanation">
+
+      <p class="eyebrow">AUTOMATIC TRAINING</p>
+
+      <h3>Repeat the learning cycle</h3>
+
+      <p id="trainingExplanation">
+        Each training iteration performs a forward pass, calculates the
+        gradients with backpropagation, and then updates the parameters
+        with gradient descent.
+      </p>
+
+      <div class="training-cycle">
+        <span>Forward pass</span>
+        <strong>→</strong>
+        <span>Backpropagation</span>
+        <strong>→</strong>
+        <span>Update parameters</span>
+        <strong>→</strong>
+        <span>Repeat</span>
+      </div>
+
+    </div>
+
+
+    <div class="training-stats">
+
+      <div>
+        <span>Prediction</span>
+        <strong id="predictionStat">—</strong>
+      </div>
+
+      <div>
+        <span>Target</span>
+        <strong id="targetStat">—</strong>
+      </div>
+
+      <div>
+        <span>Loss</span>
+        <strong id="lossStat">—</strong>
+      </div>
+
+      <div>
+        <span>Training steps</span>
+        <strong id="trainingStepsStat">0</strong>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       NETWORK
+       ============================================================ -->
+
+  <section class="network-panel">
+
+    <div class="network-heading">
+      <div>
+        <h2>The Network</h2>
+        <p>
+          2 inputs → 2 hidden neurons → 1 output
+        </p>
+      </div>
+
+      <div class="legend">
+        <span><i class="dot forward-dot"></i> Forward value</span>
+        <span><i class="dot backward-dot"></i> Gradient</span>
+        <span><i class="dot active-dot"></i> Current operation</span>
+      </div>
+    </div>
+
+
+    <div id="networkWrapper">
+
+      <svg id="networkSvg"
+           viewBox="0 0 1000 520"
+           role="img"
+           aria-label="Interactive neural network">
+
+        <!-- EDGES -->
+
+        <g id="edges">
+
+          <line id="edge-w1" class="edge"
+                x1="170" y1="150" x2="420" y2="180"/>
+
+          <line id="edge-w2" class="edge"
+                x1="170" y1="370" x2="420" y2="180"/>
+
+          <line id="edge-w3" class="edge"
+                x1="170" y1="150" x2="420" y2="340"/>
+
+          <line id="edge-w4" class="edge"
+                x1="170" y1="370" x2="420" y2="340"/>
+
+          <line id="edge-w5" class="edge"
+                x1="520" y1="180" x2="760" y2="260"/>
+
+          <line id="edge-w6" class="edge"
+                x1="520" y1="340" x2="760" y2="260"/>
+
+        </g>
+
+
+        <!-- EDGE LABELS -->
+
+        <g class="edge-labels">
+
+            <!-- x1 → h1 -->
+            <text id="label-w1" x="292" y="151"></text>
+
+            <!-- x2 → h1 -->
+            <text id="label-w2" x="272" y="305"></text>
+
+            <!-- x1 → h2 -->
+            <text id="label-w3" x="262" y="215"></text>
+
+            <!-- x2 → h2 -->
+            <text id="label-w4" x="292" y="376"></text>
+
+            <!-- h1 → output -->
+            <text id="label-w5" x="640" y="200"></text>
+
+            <!-- h2 → output -->
+            <text id="label-w6" x="640" y="330"></text>
+
+        </g>
+
+
+        <!-- INPUT NODES -->
+
+        <g id="node-x1" class="node input-node"
+           transform="translate(120,150)">
+          <circle r="50"></circle>
+          <text class="node-name" y="-8">x₁</text>
+          <text id="value-x1" class="node-value" y="20"></text>
+        </g>
+
+        <g id="node-x2" class="node input-node"
+           transform="translate(120,370)">
+          <circle r="50"></circle>
+          <text class="node-name" y="-8">x₂</text>
+          <text id="value-x2" class="node-value" y="20"></text>
+        </g>
+
+
+        <!-- HIDDEN NODES -->
+
+        <g id="node-h1" class="node"
+           transform="translate(470,180)">
+          <circle r="55"></circle>
+          <text class="node-name" y="-12">h₁</text>
+          <text id="value-h1" class="node-value" y="16"></text>
+        </g>
+
+        <g id="node-h2" class="node"
+           transform="translate(470,340)">
+          <circle r="55"></circle>
+          <text class="node-name" y="-12">h₂</text>
+          <text id="value-h2" class="node-value" y="16"></text>
+        </g>
+
+
+        <!-- OUTPUT -->
+
+        <g id="node-yhat" class="node output-node"
+           transform="translate(815,260)">
+          <circle r="58"></circle>
+          <text class="node-name" y="-12">ŷ</text>
+          <text id="value-yhat" class="node-value" y="16"></text>
+        </g>
+
+
+        <!-- LOSS -->
+
+        <g id="node-loss" class="node loss-node"
+           transform="translate(940,260)">
+          <rect x="-45" y="-45"
+                width="90" height="90"
+                rx="18"></rect>
+
+          <text class="node-name" y="-10">Loss</text>
+          <text id="value-loss" class="node-value" y="18"></text>
+        </g>
+
+        <!-- CURRENT NETWORK COMPUTATION -->
+
+        <g id="networkComputation">
+
+        <rect
+            class="network-computation-box"
+            x="145"
+            y="20"
+            width="720"
+            height="70"
+            rx="14">
+        </rect>
+
+        <text
+            id="networkComputationLine1"
+            class="network-computation-line main"
+            x="500"
+            y="44">
+            Press Step Forward to begin
+        </text>
+
+        <text
+            id="networkComputationLine2"
+            class="network-computation-line secondary"
+            x="500"
+            y="67">
+        </text>
+
+        </g>
+       
+
+        <!-- LAYER LABELS -->
+
+        <text class="layer-label" x="120" y="505">INPUT</text>
+        <text class="layer-label" x="470" y="505">HIDDEN</text>
+        <text class="layer-label" x="815" y="505">OUTPUT</text>
+
+        <!-- Pre-activation z values.
+            JavaScript keeps these blank until the corresponding
+            neuron is calculated during the forward pass. -->
+
+        <text id="value-z1" class="z-value" x="470" y="250"></text>
+
+        <text id="value-z2" class="z-value" x="470" y="410"></text>
+
+        <text id="value-z3" class="z-value" x="815" y="340"></text>
+      </svg>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       CALCULATION CARD
+       ============================================================ -->
+
+  <section class="explanation-grid">
+
+    <article class="panel calculation-panel">
+
+      <p class="eyebrow">CURRENT CALCULATION</p>
+
+      <h2 id="calculationTitle">
+        Waiting to begin
+      </h2>
+
+      <div id="formula" class="formula">
+        Press <strong>Step Forward</strong>.
+      </div>
+
+      <div id="calculationDetails" class="calculation-details"></div>
+
+    </article>
+
+        <article class="panel gradient-panel">
+
+      <!-- ========================================================
+           MANUAL BACKPROP VIEW
+           ======================================================== -->
+
+      <div id="backpropIdeaView">
+
+        <p class="eyebrow">THE BACKPROP IDEA</p>
+
+         <h2>Upstream × Local</h2>
+
+
+<!-- Main chain-rule relationship -->
+
+<div class="gradient-equation">
+
+  <div>
+    <span>upstream</span>
+    <strong id="upstreamValue">—</strong>
+  </div>
+
+  <span class="operator">×</span>
+
+  <div>
+    <span>local</span>
+    <strong id="localValue">—</strong>
+  </div>
+
+  <span class="operator">=</span>
+
+  <div>
+    <span>whole gradient</span>
+    <strong id="wholeValue">—</strong>
+  </div>
+
+</div>
+
+
+<!-- What each value means -->
+
+<div id="gradientMeaning" class="gradient-meaning" hidden>
+
+  <div class="gradient-meaning-item">
+
+    <span class="gradient-meaning-title">
+      Upstream gradient
+    </span>
+
+    <span class="gradient-meaning-definition">
+      The gradient arriving from farther downstream.
+    </span>
+
+    <strong id="upstreamSymbol">
+      —
+    </strong>
+
+  </div>
+
+
+  <div class="gradient-meaning-item">
+
+    <span class="gradient-meaning-title">
+      Local derivative
+    </span>
+
+    <span class="gradient-meaning-definition">
+      How this one operation responds to its input.
+    </span>
+
+    <strong id="localSymbol">
+      —
+    </strong>
+
+  </div>
+
+
+  <div class="gradient-meaning-item">
+
+    <span class="gradient-meaning-title">
+      Whole gradient
+    </span>
+
+    <span class="gradient-meaning-definition">
+      The new gradient produced after applying the chain rule.
+    </span>
+
+    <strong id="wholeSymbol">
+      —
+    </strong>
+
+  </div>
+
+</div>
+
+
+<!-- Direction through the computation graph -->
+
+<div id="gradientPath" class="gradient-path" hidden>
+
+  <div>
+    <span>Forward path</span>
+    <strong id="forwardGradientPath">—</strong>
+  </div>
+
+  <div>
+    <span>Backpropagation</span>
+    <strong id="backwardGradientPath">—</strong>
+  </div>
+
+</div>
+
+        <p id="gradientExplanation">
+          During the backward pass, each operation receives a gradient
+          from downstream and multiplies it by its own local derivative.
+        </p>
+
+        <div id="gradientSummary" class="gradient-summary" hidden>
+        </div>
+
+      </div>
+
+
+      <!-- ========================================================
+           AUTOMATIC TRAINING VIEW
+           Hidden until a training button is clicked.
+           ======================================================== -->
+
+      <div id="trainingHistoryView" hidden>
+
+        <p class="eyebrow">TRAINING HISTORY</p>
+
+        <div class="training-history-heading">
+
+          <h2>Watch the network learn</h2>
+
+          <span id="trainingProgress">
+            0 / 0
+          </span>
+
+        </div>
+
+
+        <div class="training-table-wrapper">
+
+          <table class="training-history-table">
+
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>ŷ</th>
+                <th>Loss</th>
+                <th>w₁</th>
+                <th>w₂</th>
+                <th>w₃</th>
+                <th>w₄</th>
+                <th>w₅</th>
+                <th>w₆</th>
+                <th>b₁</th>
+                <th>b₂</th>
+                <th>b₃</th>
+              </tr>
+            </thead>
+
+            <tbody id="trainingHistoryBody">
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </article>
+    
+
+  </section>
+
+
+  <!-- ============================================================
+       WEIGHT TABLE
+       ============================================================ -->
+
+  <section class="panel">
+
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">LEARNABLE PARAMETERS</p>
+        <h2>What does each weight know?</h2>
+      </div>
+
+      <p>
+        Click a weight to inspect its gradient and the
+        professor's “penny” interpretation.
+      </p>
+    </div>
+
+
+    <div class="weight-table-wrapper">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Weight</th>
+            <th>Connection</th>
+            <th>Value</th>
+            <th>Gradient ∂L/∂w</th>
+            <th>If w changes by +$0.01…</th>
+          </tr>
+        </thead>
+
+        <tbody id="weightTable"></tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       PENNY EXPLANATION
+       ============================================================ -->
+
+  <section id="pennyCard" class="panel penny-card">
+
+    <p class="eyebrow">THE “PENNY” QUESTION</p>
+
+    <h2 id="pennyTitle">Select a weight</h2>
+
+    <p id="pennyText">
+      Once the backward pass has calculated a gradient, click a
+      weight above to ask what would happen if that weight increased
+      by one penny.
+    </p>
+
+    <div id="pennyFormula" class="formula compact">
+      ΔL ≈ (∂L/∂w) Δw
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       TAKEAWAY
+       ============================================================ -->
+
+  <section class="takeaway">
+
+    <p class="eyebrow">TAKEAWAY</p>
+
+    <h2>
+      Backpropagation does not send the error backward.
+      It sends derivatives backward.
+    </h2>
+
+    <p>
+      Each node asks: “If my value changed slightly, how much would
+      the final loss change?” The chain rule lets that sensitivity
+      travel from the loss all the way back to every learnable weight.
+    </p>
+
+  </section>
+
+</main>
+
+
+<footer>
+  <p>
+    Built as part of Cady Hoffmann's Deep Learning Demos.
+  </p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
