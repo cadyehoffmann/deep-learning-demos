@@ -2,7 +2,11 @@
 
 An interactive visualization of the forward pass, backpropagation, and gradient descent in a small neural network.
 
+[▶ Launch Interactive Demo](https://cadyehoffmann.github.io/deep-learning-demos/backprop/)
+
 This demo shows how values move forward through a neural network to produce a prediction and loss, then traces how gradients move backward through the same computation graph using the chain rule.
+
+Based on ideas introduced in [Baydin 2018](https://papers.baulab.info/papers/also/Baydin-2018.pdf).
 
 ## The Network
 
