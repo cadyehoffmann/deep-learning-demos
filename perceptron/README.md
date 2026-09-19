@@ -6,6 +6,8 @@ An interactive visualization of Rosenblatt's perceptron learning algorithm.
 
 This demo shows how a perceptron learns a linear decision boundary by repeatedly identifying misclassified training examples and updating its weight vector.
 
+Based on the ideas introduced in [Rumelhart 1986](https://papers.baulab.info/papers/Rumelhart-1986.pdf).
+
 ## The Perceptron
 
 For an input
